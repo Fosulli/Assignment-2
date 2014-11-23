@@ -1,0 +1,37 @@
+
+makeCacheMatrix<-function(x=matrix()) {
+	m<-NULL 
+	# provides default values
+	set<-function(y){
+		x<<-y
+		##caches the inputted matrix so that cacheSolve can check whether it has changed
+		m<<-NULL
+		#sets the value of m to NULL
+	}
+	get<-function()x
+	setmatrix<-function(solve)
+	m<<-solve
+	getmatrix<-function()m
+	list(set=set, get=get, setmatrix=setmatrix, getmatrix=getmatrix)
+	}
+	## creates a list to house the four functions
+
+cacheSolve <-function(x=matrix(), ...) {
+	#need to compare what was there before
+	m<-x$getmatrix()
+	if(!is.null(m)){
+		##check to see if this has been calculated previously
+		message("obtaining data")
+		return(m)
+	}
+		matrix<-x$get()
+	m<-solve(matrix,...)
+	## compute the value of the inverse of the imput function
+	x$setmatrix(m)
+m
+##return m to get the matrix
+}
+##test the code	
+mat <- matrix(data = c(6,9,5,3,7,8,6,2,4), nrow = 3, ncol = 3)
+mat2 <- makeCacheMatrix(mat)
+cacheSolve(mat2)
